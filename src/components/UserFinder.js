@@ -1,6 +1,7 @@
-import { Fragment,useState,useEffect,Component} from "react";
+import { Fragment, useState, useEffect, Component } from "react";
 import classes from "./UserFinder.module.css";
 import UsersContext from "../store/users-context";
+import ErrorBoundary from "./ErrorBoundary";
 
 import Users from "./Users";
 
@@ -17,8 +18,6 @@ class UserFinder extends Component {
     super();
     this.state = { filteredUsers: [], searchTerm: "" };
   }
-
-  
 
   componentDidMount() {
     // Send http request...
@@ -47,12 +46,13 @@ class UserFinder extends Component {
           type="search"
           onChange={this.searchChangeHandler.bind(this)}
         />
-        <Users users={this.state.filteredUsers} />
+        <ErrorBoundary>
+          <Users users={this.state.filteredUsers} />
+        </ErrorBoundary>
       </Fragment>
     );
   }
 }
-
 
 // const UserFinder = () => {
 //   const [filteredUsers, setFilteredUsers] = useState(DUMMY_USERS);
